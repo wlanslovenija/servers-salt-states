@@ -32,3 +32,10 @@ net.ipv4.conf.default.send_redirects:
 net.ipv4.conf.default.rp_filter:
   sysctl.present:
     - value: 0
+
+sysfsutils:
+  pkg:
+    - installed
+  service.running:
+    - require:
+      - pkg: sysfsutils
