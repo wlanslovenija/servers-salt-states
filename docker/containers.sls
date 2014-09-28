@@ -1,115 +1,102 @@
-{% set kernel_modules = [] %}
-{% set networks = [] %}
-{% set sysctls = dict() %}
-{% set sysfs = dict() %}
-{% set volumes = dict() %}
+#!pyobjects
+
+from salt.utils import pyobjects
+
+Sls = pyobjects.StateFactory('sls')
+
+def state(_cls, _func, _id, **kwargs):
+    from salt.utils import pyobjects
+
+    try:
+        return getattr(_cls, _func)(_id, **kwargs).requisite
+    except pyobjects.DuplicateState:
+        return _cls(_id)
 
 # Setup docker containers
-{% for container, cfg in pillar['docker']['containers'].items() %}
-{{ container }}-image:
-  docker.pulled:
-    - name: {{ cfg['image'] }}
-    - require:
-      - sls: docker.base
+for container, cfg in pillar('docker:containers').items():
+    docker_image = state(
+        Docker, 'pulled',
+        '%s-image' % container,
+        name=cfg['image'],
+        require=Sls('docker.base'),
+    )
 
-{{ container }}-container:
-  docker.running:
-    - name: {{ container }}
-    - hostname: {{ container }}
-    - image: {{ cfg['image'] }}
-{% if cfg.get('environment') %}
-    - environment:
-{% for key, value in cfg['environment'].items() %}
-      - {{ key }}: {{ value }}
-{% endfor %}
-{% endif %}
-{% if cfg.get('capabilities', []) %}
-    - cap_add:
-{% for cap in cfg['capabilities'] %}
-      - {{ cap }}
-{% endfor %}
-{% endif %}
-    - require:
-      - docker: {{ container }}-image
-{% for volume in cfg.get('volumes', {}).keys() %}
-      - file: {{ volume }}
-{% endfor %}
-{% do sysctls.update(cfg.get('sysctl', {})) %}
-{% for sysctl in cfg.get('sysctl', {}).keys() %}
-      - sysctl: {{ sysctl }}
-{% endfor %}
-{% do sysfs.update(cfg.get('sysfs', {})) %}
-{% for sysfs in cfg.get('sysfs', {}).keys() %}
-      - file: sysfs-{{ sysfs }}
-{% endfor %}
-{% for module in cfg.get('host_kernel_modules', []) %}
-{% if module not in kernel_modules %}{% do kernel_modules.append(module) %}{% endif %}
-      - kmod: docker-kmod-{{ module }}
-{% endfor %}
-{% if cfg.get('volumes', {}) %}
-{% do volumes.update(cfg.get('volumes', {})) %}
-    - volumes:
-{% for volume, vol_cfg in cfg.get('volumes', {}).items() %}
-      - {{ volume }}: {{ vol_cfg['bind'] }}
-{% endfor %}
-{% endif %}
+    requires = [docker_image]
 
-{% macro format_addresses(net) %}
-{% for ip_cfg in net.get('ips', []) %}--address {{ ip_cfg['address'] }} {% endfor %}
-{% endmacro %}
+    # Create the required volumes
+    for vol_name, vol_cfg in cfg.get('volumes', {}).items():
+        volume = state(
+            File, 'directory',
+            vol_name,
+            user=vol_cfg.get('user', 'root'),
+            group=vol_cfg.get('group', 'root'),
+            mode=755,
+            makedirs=True,
+        )
+        requires.append(volume)
 
-{% for net in cfg.get('networks', []) %}
-{% if net['id'] not in networks %}{% do networks.append(net['id']) %}{% endif %}
-{{ container }}-network-{{ net['id'] }}:
-  cmd.run:
-    - name: netcfg attach {{ container }} {{ net['id'] }} {{ format_addresses(net) }}
-    - require:
-      - sls: docker.network
-      - docker: {{ container }}-container
-      - cmd: network-{{ net['id'] }}
-{% endfor %}
-{% endfor %}
+    # Setup required kernel modules on the host
+    for module_name in cfg.get('host_kernel_modules', []):
+        module = state(
+            Kmod, 'present',
+            module_name,
+            name=module_name,
+            persist=True,
+        )
+        requires.append(module)
 
-# Setup required kernel modules on the host
-{% for module in kernel_modules %}
-docker-kmod-{{ module }}:
-  kmod.present:
-    - name: {{ module }}
-    - persist: True
-{% endfor %}
+    # Setup required sysctls on the host
+    for sysctl_name, sysctl_value in cfg.get('sysctl', {}).items():
+        sysctl = state(
+            Sysctl, 'present',
+            sysctl_name,
+            value=sysctl_value,
+        )
+        requires.append(sysctl)
 
-# Setup required sysctls on the host
-{% for sysctl, value in sysctls.items() %}
-{{ sysctl }}:
-  sysctl.present:
-    - value: {{ value }}
-{% endfor %}
+    # Setup required sysfs configuration on the host
+    for sysfs_name, sysfs_value in cfg.get('sysfs', {}).items():
+        sysfs = state(
+            File, 'managed',
+            sysfs_name,
+            name='/etc/sysfs.d/%s.conf' % sysfs_name,
+            contents='%s = %s' % (sysfs_name.replace('.', '/'), sysfs_value),
+            watch_in=Service('sysfsutils'),
+        )
+        requires.append(sysfs)
 
-# Setup required sysfs configuration on the host
-{% for sysfs, value in sysfs.items() %}
-sysfs-{{ sysfs }}:
-  file.managed:
-    - name: /etc/sysfs.d/{{ sysfs }}.conf
-    - contents: {{ sysfs|replace('.', '/') }} = {{ value }}
-    - watch_in:
-      - service: sysfsutils
-{% endfor %}
+    docker_container = state(
+        Docker, 'running',
+        '%s-container' % container,
+        name=container,
+        hostname=container,
+        image=cfg['image'],
+        environment=[{key: value} for key, value in cfg.get('environment', {}).items()],
+        cap_add=cfg.get('capabilities', []),
+        volumes=[{volume: vol_cfg['bind']} for volume, vol_cfg in cfg.get('volumes', {}).items()],
+        require=requires,
+    )
 
-# Setup required networks on the host
-{% for net in networks %}
-network-{{ net }}:
-  cmd.run:
-    - name: netcfg create {{ net }} bridge
-    - require:
-      - sls: docker.network
-{% endfor %}
+    # Setup required networks on the host
+    for net_cfg in cfg.get('networks', []):
+        net_create = state(
+            Cmd, 'run',
+            'network-%s' % net_cfg['id'],
+            name='netcfg create %s bridge' % net_cfg['id'],
+            require=Sls('docker.network'),
+        )
 
-# Setup required volumes on the host
-{% for volume, vol_cfg in volumes.items() %}
-{{ volume }}:
-  file.directory:
-    - user: {{ vol_cfg.get('user', 'root') }}
-    - group: {{ vol_cfg.get('group', 'root') }}
-    - mode: 755
-    - makedirs: True
-{% endfor %}
+        net_attach = state(
+            Cmd, 'run',
+            '%s-network-%s' % (container, net_cfg['id']),
+            name='netcfg attach %s %s %s' % (
+                container,
+                net_cfg['id'],
+                " ".join(['--address %s' % ip_cfg['address'] for ip_cfg in net_cfg.get('ips', [])]),
+            ),
+            require=[
+                Sls('docker.network'),
+                net_create,
+                docker_container,
+            ],
+        )
