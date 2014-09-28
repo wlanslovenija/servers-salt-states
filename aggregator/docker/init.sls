@@ -3,3 +3,4 @@ include:
   - aggregator.docker.olsr
   - aggregator.docker.tokumx
   - aggregator.docker.postgresql
+  - aggregator.docker.nodewatcher
