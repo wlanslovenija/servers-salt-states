@@ -1,5 +1,6 @@
 #!pyobjects
 
+import os
 from salt.utils import pyobjects
 
 Sls = pyobjects.StateFactory('sls')
@@ -22,6 +23,24 @@ for container, cfg in pillar('docker:containers').items():
     )
 
     requires = [docker_image]
+    volumes = [{volume: vol_cfg['bind']} for volume, vol_cfg in cfg.get('volumes', {}).items()]
+
+    # Create the required configs
+    for cfg_name, cfg_path in cfg.get('config', {}).items():
+        contents = pillar('docker:configs:%s' % cfg_name)
+        if contents:
+            cfg_host_path = os.path.join('/srv/storage/config', cfg_name)
+            volume = state(
+                File, 'managed',
+                cfg_host_path,
+                contents=contents,
+                user='root',
+                group='root',
+                mode=644,
+                makedirs=True,
+            )
+            volumes.append({cfg_host_path: cfg_path})
+            requires.append(volume)
 
     # Create the required volumes
     for vol_name, vol_cfg in cfg.get('volumes', {}).items():
@@ -65,6 +84,12 @@ for container, cfg in pillar('docker:containers').items():
         )
         requires.append(sysfs)
 
+    # Setup required links
+    links = {}
+    for link_name, link_alias in cfg.get('links', {}).items():
+        requires.append(Docker('%s-container' % link_name))
+        links[link_name] = link_alias
+
     docker_container = state(
         Docker, 'running',
         '%s-container' % container,
@@ -73,7 +98,8 @@ for container, cfg in pillar('docker:containers').items():
         image=cfg['image'],
         environment=[{key: value} for key, value in cfg.get('environment', {}).items()],
         cap_add=cfg.get('capabilities', []),
-        volumes=[{volume: vol_cfg['bind']} for volume, vol_cfg in cfg.get('volumes', {}).items()],
+        volumes=volumes,
+        links=links,
         require=requires,
     )
 
