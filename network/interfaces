@@ -14,7 +14,7 @@ auto {{ iface }}
 
 {%- for ipv6 in cfg['ipv6'] %}
 {%- if ipv6['type'] == 'static' %}
-iface {{ iface }} inet static
+iface {{ iface }} inet6 static
   address {{ ipv6['address'] }}
   netmask {{ ipv6['netmask'] }}
   gateway {{ ipv6['gateway'] }}
