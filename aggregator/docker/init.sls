@@ -4,3 +4,5 @@ include:
   - aggregator.docker.tokumx
   - aggregator.docker.postgresql
   - aggregator.docker.nodewatcher
+  - aggregator.docker.builders
+  - aggregator.docker.discovery
