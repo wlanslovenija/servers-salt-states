@@ -19,11 +19,12 @@ for container, cfg in pillar('docker:containers').items():
         Docker, 'pulled',
         '%s-image' % container,
         name=cfg['image'],
+        tag=cfg.get('tag', 'latest'),
         require=Sls('docker.base'),
     )
 
     requires = [docker_image]
-    volumes = [{volume: vol_cfg['bind']} for volume, vol_cfg in cfg.get('volumes', {}).items()]
+    volumes = []
 
     # Create the required configs
     for cfg_name, cfg_path in cfg.get('config', {}).items():
@@ -44,15 +45,41 @@ for container, cfg in pillar('docker:containers').items():
 
     # Create the required volumes
     for vol_name, vol_cfg in cfg.get('volumes', {}).items():
-        volume = state(
-            File, 'directory',
-            vol_name,
-            user=vol_cfg.get('user', 'root'),
-            group=vol_cfg.get('group', 'root'),
-            mode=755,
-            makedirs=True,
-        )
-        requires.append(volume)
+        volumes.append({
+            vol_name: {
+                'bind': vol_cfg['bind'],
+                'ro': vol_cfg.get('readonly', False),
+            },
+        })
+
+        vol_type = vol_cfg.get('type', 'directory')
+        if vol_type == 'directory':
+            volume = state(
+                File, 'directory',
+                vol_name,
+                user=vol_cfg.get('user', 'root'),
+                group=vol_cfg.get('group', 'root'),
+                mode=vol_cfg.get('mode', 755),
+                makedirs=True,
+            )
+        elif vol_type == 'file':
+            volume = state(
+                File, 'managed',
+                vol_name,
+                user=vol_cfg.get('user', 'root'),
+                group=vol_cfg.get('group', 'root'),
+                mode=vol_cfg.get('mode', 644),
+                makedirs=True,
+            )
+        elif vol_type in ('socket', 'other'):
+            # Nothing should be done for sockets
+            volume = None
+        elif vol_type == 'container':
+            # Dependency from another container
+            volume = Docker('%s-container' % vol_cfg['container'])
+
+        if volume is not None:
+            requires.append(volume)
 
     # Setup required kernel modules on the host
     for module_name in cfg.get('host_kernel_modules', []):
@@ -95,7 +122,7 @@ for container, cfg in pillar('docker:containers').items():
         '%s-container' % container,
         name=container,
         hostname=container,
-        image=cfg['image'],
+        image='%s:%s' % (cfg['image'], cfg.get('tag', 'latest')),
         environment=[{key: value} for key, value in cfg.get('environment', {}).items()],
         cap_add=cfg.get('capabilities', []),
         volumes=volumes,
