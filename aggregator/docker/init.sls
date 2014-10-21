@@ -6,3 +6,4 @@ include:
   - aggregator.docker.nodewatcher
   - aggregator.docker.builders
   - aggregator.docker.discovery
+  - aggregator.docker.nginx

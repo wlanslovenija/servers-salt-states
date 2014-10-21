@@ -7,6 +7,7 @@ docker:
         postgresql: db
         tokumx: tokumx
       environment:
+        VIRTUAL_HOST: beta.wlan-si.net
         DJANGO_SETTINGS_MODULE: nodewatcher.settings_production
         SECRET_KEY: |
           -----BEGIN PGP MESSAGE-----
