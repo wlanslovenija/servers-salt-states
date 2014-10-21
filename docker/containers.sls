@@ -117,6 +117,14 @@ for container, cfg in pillar('docker:containers').items():
         requires.append(Docker('%s-container' % link_name))
         links[link_name] = link_alias
 
+    # Setup required ports
+    ports = {}
+    for port_def, port_bind in cfg.get('ports', {}).items():
+        ports[port_def] = {
+            'HostIp': port_bind['ip'],
+            'HostPort': port_bind['port'],
+        }
+
     docker_container = state(
         Docker, 'running',
         '%s-container' % container,
@@ -125,6 +133,7 @@ for container, cfg in pillar('docker:containers').items():
         image='%s:%s' % (cfg['image'], cfg.get('tag', 'latest')),
         environment=[{key: value} for key, value in cfg.get('environment', {}).items()],
         cap_add=cfg.get('capabilities', []),
+        ports=ports,
         volumes=volumes,
         links=links,
         require=requires,
