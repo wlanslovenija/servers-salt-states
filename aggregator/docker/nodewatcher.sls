@@ -150,3 +150,7 @@ docker:
       USE_HTTPS = True
 
       GOOGLE_MAPS_API_KEY = ''
+
+      ALLOWED_HOSTS = [
+        os.environ.get('VIRTUAL_HOST', '127.0.0.1'),
+      ]
