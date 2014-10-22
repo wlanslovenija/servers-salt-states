@@ -4,7 +4,7 @@ docker:
     nodewatcher-frontend:
       image: wlanslovenija/nodewatcher-frontend
       links:
-        postgresql: db
+        postgresql: postgresql
         tokumx: tokumx
       environment:
         VIRTUAL_HOST: beta.wlan-si.net
@@ -52,7 +52,7 @@ docker:
     nodewatcher-generator:
       image: wlanslovenija/nodewatcher-generator
       links:
-        postgresql: db
+        postgresql: postgresql
         tokumx: tokumx
       environment:
         DJANGO_SETTINGS_MODULE: nodewatcher.settings_production
@@ -109,8 +109,8 @@ docker:
               'ENGINE': 'django.contrib.gis.db.backends.postgis',
               'NAME': 'nodewatcher',
               'USER': 'nodewatcher',
-              'PASSWORD': os.environ.get('DB_ENV_PGSQL_ROLE_1_PASSWORD', ''),
-              'HOST': 'db',
+              'PASSWORD': os.environ.get('POSTGRESQL_ENV_PGSQL_ROLE_1_PASSWORD', ''),
+              'HOST': 'postgresql',
               'PORT': '5432',
           }
       }
