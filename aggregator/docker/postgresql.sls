@@ -6,8 +6,8 @@ docker:
       volumes:
         /srv/storage/postgresql:
           bind: /var/lib/postgresql/9.3/main
-          user: 119
-          group: 128
+          user: 102
+          group: 106
         /srv/log/postgresql:
           bind: /var/log/postgresql
           user: nobody
