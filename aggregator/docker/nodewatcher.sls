@@ -8,6 +8,7 @@ docker:
         tokumx: tokumx
       environment:
         VIRTUAL_HOST: beta.wlan-si.net
+        VIRTUAL_URL: /
         DJANGO_SETTINGS_MODULE: nodewatcher.settings_production
         SECRET_KEY: |
           -----BEGIN PGP MESSAGE-----
