@@ -10,3 +10,8 @@ docker:
         /var/run/docker.sock:
           bind: /var/run/docker.sock
           type: socket
+        /srv/log/nginx-proxy:
+          bind: /var/log/nginx
+          user: nobody
+          group: nogroup
+          logrotate: True
