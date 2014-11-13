@@ -12,23 +12,39 @@ docker:
         DJANGO_SETTINGS_MODULE: nodewatcher.settings_production
         SECRET_KEY: |
           -----BEGIN PGP MESSAGE-----
-          Version: GnuPG v1
+          Version: GnuPG v2.0.22 (GNU/Linux)
 
-          hQIMAwUBEMdGLj08AQ/6AyACTvVpHBTfmE+FGTVohx25SBcojRDNqrOl5spNGgjg
-          gVSvQ+tObKnxoDRTr55cd8sqMcqvDiMKYMtscFjXp2nq/lmbR/gTvJ7PSlJxVVLL
-          nEvZkdJCdP0pd/k54/mACpU6TVTNvDdxENeWCYEty2EODtf0P6lPxPTwDFECoRh4
-          vY7UDrwkmVzmls1u0jex5gLgO5Wz/pgcVxXdQ6atyCgZx1jpoMjXzumsPSp9XxFd
-          dnOEbOqB6Dm+4t6AuehNKURfjkw0umI6apuyUVyZ4K4nlqbxsLUmK8gTE/J2YM+O
-          fM82U66U57HTnJxxzkyZ5YObWBdJoU3VJZcU2+3DIag6nMWyfwqRJ6dp3CWAvYLp
-          A8gN2fDeHynd2nO4Zl88T0K7sf9sqEI6Lziw0rK2LWLyf8lVBPUHJssVsDjx4SPi
-          aDec04tk2zkouIzd+aFxPysUKGJECHQDf5RtltDH+Sk3dviWSqjElAqkUjHohAdh
-          HKFgu4atmDqQ5GBF2a9kZ/XPkWt5iS2LBnPUgFadEX6dj0kf9bzCc32EqIjVd2mp
-          zVuzXcOnDHGa97p1w9B6gtoBcP4Yr+NlEXMjnrptFi7pR0fcgJ2zuYaKkMVhiZ+B
-          BzAHZsysQne0pl5LNi6OJnVJZy1YQpu51MDvh7MbQ+L5JoEl24kkkTWLErnqH+/S
-          dwEIqasenDpDbS7z/aqu+RSRUWiaD8N1eYLSGVzmz7Rp3FWbRN/cvZi3ppBWc+t5
-          j6L6fnE0gLsO4Wvtq8usWg+iR+SM1oWwdCqHO8kBEpDgMONb92OVH47LirTekAb0
-          6tvi3sCPvfsPCB25+DLlwKcF9tq5aHic
-          =VduC
+          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
+          =vFkj
           -----END PGP MESSAGE-----
       config:
         nodewatcher: /code/nodewatcher/settings_production.py
@@ -59,23 +75,39 @@ docker:
         DJANGO_SETTINGS_MODULE: nodewatcher.settings_production
         SECRET_KEY: |
           -----BEGIN PGP MESSAGE-----
-          Version: GnuPG v1
+          Version: GnuPG v2.0.22 (GNU/Linux)
 
-          hQIMAwUBEMdGLj08AQ/6AyACTvVpHBTfmE+FGTVohx25SBcojRDNqrOl5spNGgjg
-          gVSvQ+tObKnxoDRTr55cd8sqMcqvDiMKYMtscFjXp2nq/lmbR/gTvJ7PSlJxVVLL
-          nEvZkdJCdP0pd/k54/mACpU6TVTNvDdxENeWCYEty2EODtf0P6lPxPTwDFECoRh4
-          vY7UDrwkmVzmls1u0jex5gLgO5Wz/pgcVxXdQ6atyCgZx1jpoMjXzumsPSp9XxFd
-          dnOEbOqB6Dm+4t6AuehNKURfjkw0umI6apuyUVyZ4K4nlqbxsLUmK8gTE/J2YM+O
-          fM82U66U57HTnJxxzkyZ5YObWBdJoU3VJZcU2+3DIag6nMWyfwqRJ6dp3CWAvYLp
-          A8gN2fDeHynd2nO4Zl88T0K7sf9sqEI6Lziw0rK2LWLyf8lVBPUHJssVsDjx4SPi
-          aDec04tk2zkouIzd+aFxPysUKGJECHQDf5RtltDH+Sk3dviWSqjElAqkUjHohAdh
-          HKFgu4atmDqQ5GBF2a9kZ/XPkWt5iS2LBnPUgFadEX6dj0kf9bzCc32EqIjVd2mp
-          zVuzXcOnDHGa97p1w9B6gtoBcP4Yr+NlEXMjnrptFi7pR0fcgJ2zuYaKkMVhiZ+B
-          BzAHZsysQne0pl5LNi6OJnVJZy1YQpu51MDvh7MbQ+L5JoEl24kkkTWLErnqH+/S
-          dwEIqasenDpDbS7z/aqu+RSRUWiaD8N1eYLSGVzmz7Rp3FWbRN/cvZi3ppBWc+t5
-          j6L6fnE0gLsO4Wvtq8usWg+iR+SM1oWwdCqHO8kBEpDgMONb92OVH47LirTekAb0
-          6tvi3sCPvfsPCB25+DLlwKcF9tq5aHic
-          =VduC
+          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
+          =vFkj
           -----END PGP MESSAGE-----
       config:
         nodewatcher: /code/nodewatcher/settings_production.py
