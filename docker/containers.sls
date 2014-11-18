@@ -24,7 +24,7 @@ for container, cfg in pillar('docker:containers').items():
     )
 
     requires = [docker_image]
-    volumes = []
+    volumes = {}
 
     # Create the required configs
     for cfg_name, cfg_path in cfg.get('config', {}).items():
@@ -40,17 +40,15 @@ for container, cfg in pillar('docker:containers').items():
                 mode=644,
                 makedirs=True,
             )
-            volumes.append({cfg_host_path: cfg_path})
+            volumes[cfg_host_path] = cfg_path
             requires.append(volume)
 
     # Create the required volumes
     for vol_name, vol_cfg in cfg.get('volumes', {}).items():
-        volumes.append({
-            vol_name: {
-                'bind': vol_cfg['bind'],
-                'ro': vol_cfg.get('readonly', False),
-            },
-        })
+        volumes[vol_name] = {
+            'bind': vol_cfg['bind'],
+            'ro': vol_cfg.get('readonly', False),
+        }
 
         vol_type = vol_cfg.get('type', 'directory')
         if vol_type == 'directory':
@@ -125,16 +123,22 @@ for container, cfg in pillar('docker:containers').items():
             'HostPort': port_bind['port'],
         }
 
-    docker_container = state(
-        Docker, 'running',
-        '%s-container' % container,
+    requires.append(state(
+        Docker, 'installed',
+        '%s-container-installed' % container,
         name=container,
         hostname=container,
         image='%s:%s' % (cfg['image'], cfg.get('tag', 'latest')),
         environment=[{key: value} for key, value in cfg.get('environment', {}).items()],
+    ))
+
+    docker_container = state(
+        Docker, 'running',
+        '%s-container' % container,
+        name=container,
         cap_add=cfg.get('capabilities', []),
-        ports=ports,
-        volumes=volumes,
+        port_bindings=ports,
+        binds=volumes,
         links=links,
         require=requires,
     )
