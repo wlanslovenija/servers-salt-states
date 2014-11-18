@@ -130,6 +130,7 @@ for container, cfg in pillar('docker:containers').items():
         hostname=container,
         image='%s:%s' % (cfg['image'], cfg.get('tag', 'latest')),
         environment=[{key: value} for key, value in cfg.get('environment', {}).items()],
+        ports=ports,
     ))
 
     docker_container = state(
