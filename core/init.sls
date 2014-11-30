@@ -39,3 +39,16 @@ sysfsutils:
   service.running:
     - require:
       - pkg: sysfsutils
+
+debsums:
+  pkg:
+    - installed
+
+/etc/default/debsums:
+  file.managed:
+    - source: salt://core/debsums.conf
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - pkg: debsums
