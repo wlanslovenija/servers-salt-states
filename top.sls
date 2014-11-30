@@ -5,5 +5,6 @@ base:
     - mailer
     - mdadm
     - smart
+    - logwatch
     - pip
     - docker
