@@ -73,3 +73,51 @@ unattended-upgrades:
     - mode: 644
     - require:
       - pkg: unattended-upgrades
+
+screen:
+  pkg.installed
+
+screenrc-startup-message:
+  file.replace:
+    - name: /etc/screenrc
+    - pattern: "^#startup_message off"
+    - repl: startup_message off
+    - require:
+      - pkg: screen
+
+screenrc-scrollback:
+  file.replace:
+    - name: /etc/screenrc
+    - pattern: "^defscrollback 1024"
+    - repl: |
+        defscrollback 10000
+        defobuflimit 2048
+    - require:
+      - pkg: screen
+
+htop:
+  pkg.installed
+
+iotop:
+  pkg.installed
+
+sysstat:
+  pkg.installed
+
+iptraf:
+  pkg.installed
+
+tcpdump:
+  pkg.installed
+
+inputrc-pgup:
+  file.replace:
+    - name: /etc/inputrc
+    - pattern: '^# ".+": history-search-backward'
+    - repl: '"\e[5~": history-search-backward'
+
+inputrc-pgdn:
+  file.replace:
+    - name: /etc/inputrc
+    - pattern: '^# ".+": history-search-forward'
+    - repl: '"\e[6~": history-search-forward'
