@@ -7,4 +7,6 @@ base:
     - smart
     - logwatch
     - pip
-    - docker
+    - docker.base
+    - docker.containers
+    - docker.network
