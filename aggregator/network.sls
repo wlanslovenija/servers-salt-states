@@ -2,8 +2,6 @@ network:
   system:
     hostname: aggregator
     fqdn: aggregator.wlan-si.net
-  mailer:
-    relay: mail.tnode.com
   dns:
     - 2001:4860:4860::8844
     - 2001:4860:4860::8888
@@ -20,3 +18,8 @@ network:
           address: 2a00:1368:1000:30::12
           netmask: 64
           gateway: 2a00:1368:1000:30::1
+mailer:
+    relay: mail.tnode.com
+    root_alias:
+      - monitoring@unico.re
+      - mitar.aggregator@tnode.com
