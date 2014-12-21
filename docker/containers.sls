@@ -123,6 +123,21 @@ for container, cfg in pillar('docker:containers').items():
             'HostPort': port_bind['port'],
         }
 
+        # Setup firewall rules
+        firewall = state(
+            Iptables, 'append',
+            '%s-container-port-%s-%s' % (container, port_bind['ip'], port_bind['port']),
+            table='filter',
+            chain='INPUT',
+            jump='ACCEPT',
+            source='0.0.0.0/0',
+            destination='%s/32' % port_bind['ip'],
+            dport=port_bind['port'],
+            proto='tcp' if 'tcp' in port_def else 'udp',
+            save=True,
+            require=Pkg('iptables'),
+        )
+
     requires.append(state(
         Docker, 'installed',
         '%s-container-installed' % container,
