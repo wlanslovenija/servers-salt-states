@@ -40,7 +40,10 @@ for container, cfg in pillar('docker:containers').items():
                 mode=644,
                 makedirs=True,
             )
-            volumes[cfg_host_path] = cfg_path
+            volumes[cfg_host_path] = {
+                'bind': cfg_path,
+                'ro': True,
+            }
             requires.append(volume)
 
     # Create the required volumes
@@ -138,21 +141,43 @@ for container, cfg in pillar('docker:containers').items():
             require=Pkg('iptables'),
         )
 
+    # Prepare the environment
+    cfg_environment = cfg.get('environment', {})
+    environment = []
+    if isinstance(cfg_environment, dict):
+        # Direct environment variable specification
+        environment += [{key: value for key, value in cfg_environment.items()}]
+    elif isinstance(cfg_environment, list):
+        for item in cfg_environment:
+            if isinstance(item, dict):
+                # Direct environment variable specification
+                environment += [{key: value for key, value in item.items()}]
+            elif isinstance(item, basestring):
+                # Reference to common environment
+                item = pillar('docker:environments:%s' % item)
+                environment += [{key: value for key, value in item.items()}]
+
     requires.append(state(
         Docker, 'installed',
         '%s-container-installed' % container,
         name=container,
         hostname=container,
         image='%s:%s' % (cfg['image'], cfg.get('tag', 'latest')),
-        environment=[{key: value} for key, value in cfg.get('environment', {}).items()],
+        environment=environment,
         ports=ports,
     ))
+
+    network_mode = cfg.get('network_mode', None)
+    if network_mode is not None and network_mode['type'] == 'container':
+        requires.append(Docker('%s-container' % network_mode['container']))
+        network_mode = 'container:%s' % network_mode['container']
 
     docker_container = state(
         Docker, 'running',
         '%s-container' % container,
         name=container,
         cap_add=cfg.get('capabilities', []),
+        network_mode=network_mode,
         port_bindings=ports,
         binds=volumes,
         links=links,
