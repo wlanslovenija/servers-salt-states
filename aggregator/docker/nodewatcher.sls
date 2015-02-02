@@ -164,10 +164,10 @@ docker:
         'tz_aware': USE_TZ,
       }
 
-      OLSRD_MONITOR_HOST = 'olsrd'
+      OLSRD_MONITOR_HOST = '127.0.0.1'
       OLSRD_MONITOR_PORT = 2006
 
-      MEASUREMENT_SOURCE_NODE = ''
+      MEASUREMENT_SOURCE_NODE = '5dcf6dae-9246-47ec-8ba5-f864d8f88778'
 
       USE_HTTPS = True
 
