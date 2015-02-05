@@ -1,7 +1,7 @@
 docker:
   containers:
     discovery:
-      image: wlanslovenija/docker-hosts
+      image: tozd/docker-hosts
       volumes:
         /var/run/docker.sock:
           bind: /var/run/docker.sock
