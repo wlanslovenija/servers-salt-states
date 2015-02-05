@@ -2,6 +2,8 @@ docker:
   containers:
     tokumx:
       image: wlanslovenija/tokumx
+      resources:
+        memory: 8g
       sysfs:
         kernel.mm.transparent_hugepage.enabled: never
       volumes:
