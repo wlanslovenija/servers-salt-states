@@ -157,6 +157,9 @@ for container, cfg in pillar('docker:containers').items():
                 item = pillar('docker:environments:%s' % item)
                 environment += [{key: value for key, value in item.items()}]
 
+    # Configure resource limits
+    resources = cfg.get('resources', {})
+
     requires.append(state(
         Docker, 'installed',
         '%s-container-installed' % container,
@@ -165,6 +168,7 @@ for container, cfg in pillar('docker:containers').items():
         image='%s:%s' % (cfg['image'], cfg.get('tag', 'latest')),
         environment=environment,
         ports=ports,
+        mem_limit=resources.get('memory', 0),
     ))
 
     network_mode = cfg.get('network_mode', None)
