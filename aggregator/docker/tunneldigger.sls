@@ -14,6 +14,12 @@ docker:
         TUNNELDIGGER_BRIDGE: td-vpn0
       networks:
         - id: td-vpn0
+      volumes:
+        /srv/log/tunneldigger/vpn0:
+          bind: /var/log/tunneldigger
+          user: nobody
+          group: nogroup
+          logrotate: True
     tunneldigger-vpn1:
       image: wlanslovenija/tunneldigger-client
       host_kernel_modules:
@@ -28,3 +34,9 @@ docker:
         TUNNELDIGGER_BRIDGE: td-vpn1
       networks:
         - id: td-vpn1
+      volumes:
+        /srv/log/tunneldigger/vpn1:
+          bind: /var/log/tunneldigger
+          user: nobody
+          group: nogroup
+          logrotate: True
