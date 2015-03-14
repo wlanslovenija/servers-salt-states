@@ -6,7 +6,15 @@ docker:
         80/tcp:
           ip: 212.101.139.12
           port: 80
+        443/tcp:
+          ip: 212.101.139.12
+          port: 443
       volumes:
+        /srv/storage/ssl:
+          bind: /ssl
+          user: root
+          group: root
+          mode: 700
         /var/run/docker.sock:
           bind: /var/run/docker.sock
           type: socket
