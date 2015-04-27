@@ -77,6 +77,32 @@ docker:
           user: nobody
           group: nogroup
           logrotate: True
+    nodewatcher-monitorq:
+      image: wlanslovenija/nodewatcher-monitorq
+      network_mode:
+        type: container
+        container: olsrd
+      environment:
+        - nodewatcher
+        - postgresql
+      config:
+        nodewatcher: /code/nodewatcher/settings_production.py
+      volumes:
+        /srv/storage/discovery/hosts:
+          bind: /etc/hosts
+          type: container
+          container: discovery
+          readonly: True
+        /srv/storage/nodewatcher/media:
+          bind: /media
+          user: www-data
+          group: www-data
+          mode: 755
+        /srv/log/nodewatcher/monitorq:
+          bind: /var/log/celery
+          user: nobody
+          group: nogroup
+          logrotate: True
   environments:
     nodewatcher:
       DJANGO_SETTINGS_MODULE: nodewatcher.settings_production
@@ -167,9 +193,23 @@ docker:
       OLSRD_MONITOR_HOST = '127.0.0.1'
       OLSRD_MONITOR_PORT = 2006
 
+      MONITOR_HTTP_PUSH_HOST = 'beta.wlan-si.net'
+
       MEASUREMENT_SOURCE_NODE = '5dcf6dae-9246-47ec-8ba5-f864d8f88778'
 
       USE_HTTPS = True
+
+      HTTPS_PUBLIC_KEY = """
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyGTutAIvDLMhQcfjLrzz
+      kho+uhklozGOhF3OvnYoGxlzXt7BZ/zd73dn8z3FcNHfA+VyJsz3+vaMOMmz0aim
+      btfkZrKgYRcF6JhkILnEDDz8072rVX2kR61BTh8LoXPJcI3Lhcx1UiiGah/TouDw
+      RLn0bhZw/FdBsEAbw8kuCJ+OvXkT6N8zM5FIHsMMp+KAAD6TJcFFUWTU0C+wUtZL
+      bj9TPZReK+FQbX6rbtG4Q+Dmrft92jnHkj1WwwVhKbrG0uEuwNOBoCv79sR7YkoE
+      5xYwzatP9S+YIJ6weWqgPlpqafXoISS7dKMHql1jWWIMVZRu7DZcEyrJ5VEZLAsg
+      YQIDAQAB
+      -----END PUBLIC KEY-----
+      """
 
       GOOGLE_MAPS_API_KEY = ''
 
