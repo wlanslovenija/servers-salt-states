@@ -55,7 +55,7 @@ docker:
       image: wlanslovenija/nodewatcher-monitor
       network_mode:
         type: container
-        container: olsrd
+        container: mesh-network
       environment:
         - nodewatcher
         - postgresql
@@ -81,7 +81,7 @@ docker:
       image: wlanslovenija/nodewatcher-monitorq
       network_mode:
         type: container
-        container: olsrd
+        container: mesh-network
       environment:
         - nodewatcher
         - postgresql

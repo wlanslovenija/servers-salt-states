@@ -1,6 +1,6 @@
 include:
   - aggregator.docker.tunneldigger
-  - aggregator.docker.olsr
+  - aggregator.docker.router
   - aggregator.docker.tokumx
   - aggregator.docker.postgresql
   - aggregator.docker.nodewatcher
