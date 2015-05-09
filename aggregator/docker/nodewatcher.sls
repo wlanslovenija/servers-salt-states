@@ -10,6 +10,13 @@ docker:
         - postgresql
       config:
         nodewatcher: /code/nodewatcher/settings_production.py
+      files:
+        /srv/storage/ssl/beta.wlan-si.net_nonssl.conf: |
+          # Allow push without SSL (needed for simple sensors). There is still a
+          # per-node configuration that determines whether this should be allowed.
+          location /push/http/ {
+            proxy_pass http://beta.wlan-si.net-u;
+          }
       volumes:
         /srv/storage/discovery/hosts:
           bind: /etc/hosts
