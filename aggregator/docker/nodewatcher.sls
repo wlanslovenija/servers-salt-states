@@ -4,18 +4,39 @@ docker:
     nodewatcher-frontend:
       image: wlanslovenija/nodewatcher-frontend
       environment:
-        - VIRTUAL_HOST: beta.wlan-si.net
+        # We use a different virtual host for pushing monitoring data as we configure
+        # TLS client authentication there.
+        - VIRTUAL_HOST: beta.wlan-si.net,push.nodes.wlan-si.net
           VIRTUAL_URL: /
         - nodewatcher
         - postgresql
       config:
         nodewatcher: /code/nodewatcher/settings_production.py
       files:
-        /srv/storage/ssl/beta.wlan-si.net_nonssl.conf: |
+        /srv/storage/ssl/push.nodes.wlan-si.net_nonssl.conf: |
           # Allow push without SSL (needed for simple sensors). There is still a
           # per-node configuration that determines whether this should be allowed.
           location /push/http/ {
-            proxy_pass http://beta.wlan-si.net-u;
+            proxy_pass http://push.nodes.wlan-si.net-u;
+          }
+        /srv/storage/ssl/push.nodes.wlan-si.net_ssl.conf: |
+          # Setup client authentication. Allow authentication with any certificate
+          # as all verification is done by the nodewatcher modules.
+          ssl_verify_client optional_no_ca;
+
+          # Accept push requests.
+          location ~ ^/push/http[/$] {
+            proxy_pass http://push.nodes.wlan-si.net-u;
+          }
+
+          # Redirect all other requests to the beta site.
+          location ~ / {
+            return 301 https://beta.wlan-si.net$request_uri;
+          }
+        /srv/storage/ssl/beta.wlan-si.net_ssl.conf: |
+          # Redirect push requests to its proper virtual host.
+          location /push/http/ {
+            return 301 https://push.nodes.wlan-si.net$request_uri;
           }
       volumes:
         /srv/storage/discovery/hosts:
@@ -200,7 +221,7 @@ docker:
       OLSRD_MONITOR_HOST = '127.0.0.1'
       OLSRD_MONITOR_PORT = 2006
 
-      MONITOR_HTTP_PUSH_HOST = 'beta.wlan-si.net'
+      MONITOR_HTTP_PUSH_HOST = 'push.nodes.wlan-si.net'
 
       MEASUREMENT_SOURCE_NODE = '5dcf6dae-9246-47ec-8ba5-f864d8f88778'
 
@@ -220,6 +241,4 @@ docker:
 
       GOOGLE_MAPS_API_KEY = ''
 
-      ALLOWED_HOSTS = [
-        os.environ.get('VIRTUAL_HOST', '127.0.0.1'),
-      ]
+      ALLOWED_HOSTS = os.environ.get('VIRTUAL_HOST', '127.0.0.1').split(',')
