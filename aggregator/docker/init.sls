@@ -7,3 +7,4 @@ include:
   - aggregator.docker.builders
   - aggregator.docker.discovery
   - aggregator.docker.nginx
+  - aggregator.docker.rocketchat
