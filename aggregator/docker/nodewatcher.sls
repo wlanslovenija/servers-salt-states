@@ -195,7 +195,6 @@ docker:
       STATIC_ROOT = '/static'
 
       EMAIL_HOST = ''
-      DEFAULT_FROM_EMAIL = 'notifications@nodes.wlan-si.net'
 
       CELERY_RESULT_BACKEND = 'mongodb'
       CELERY_MONGODB_BACKEND_SETTINGS = {
@@ -239,6 +238,16 @@ docker:
       -----END PUBLIC KEY-----
       """
 
-      GOOGLE_MAPS_API_KEY = ''
+      NETWORK.update({
+        'NAME': 'wlan slovenija',
+        'HOME': 'https://wlan-si.net',
+        'CONTACT': 'open@wlan-si.net',
+        'CONTACT_PAGE': 'http://wlan-si.net/contact/',
+        'DESCRIPTION': 'open wireless network of Slovenia',
+      })
+
+      EMAIL_SUBJECT_PREFIX = '[' + NETWORK['NAME'] + '] '
+      DEFAULT_FROM_EMAIL = NETWORK['CONTACT']
+      SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
       ALLOWED_HOSTS = os.environ.get('VIRTUAL_HOST', '127.0.0.1').split(',')
