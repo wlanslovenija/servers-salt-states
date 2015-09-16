@@ -238,6 +238,28 @@ docker:
       -----END PUBLIC KEY-----
       """
 
+      NODEUPGRADE_SERVER = '10.254.0.6'
+      NODEUPGRADE_PORT = 28932
+      NODEUPGRADE_USER = 'fileserver'
+      NODEUPGRADE_PRIVATE_KEY = """
+      AAAAB3NzaC1yc2EAAAADAQABAAABAQC1M6TGKaUX9k6B/NJPwpJlKaTEu9LBaEiMVLz+9NaKituc
+      8IB9Ynm/r07rRq65AXSu+bHBO9431TPiRRQ3oak7nlXhIWTUL2oH4DnwFbmFm5/NkFdP9p+PYcn9
+      YnhmWGAGFFdKGDuiGHcbVH/bulvZobBC2EDvDOlg1iA2/Xx9Jdgyq8t6M0iIxaEQydGxNa/2JpfR
+      u4O9uHq3+LZjM6i4/X2IY9JYFPUUMhnZ80uHBrjWHXZgBEyF9aT01PXvGejxJ5D4UDVe2UT6Tbl1
+      /w/zEq9BnNt1ZggXUz7S/h2xrlZMrVMDDEnBE2Mbq1tHXyHeEoclLMG9RIpF/osG1Ja3AAABADb5
+      WxVPzyms7XacaIYQRu/wKXASd8d7xv7kOo6zY1+W7zf281SXCs7v9eaFhD7WxTrMwHQaoLmZsmsE
+      gDS8lCZlTDLIOdnyJJ4NFibTwHxbkakBEKxO62vJxElelZ6fU0qk4zK0lWsBNymQglX8fR9S4bH2
+      AAVGiot5iz6Du0AQNrpZA2gdkoNHR01oITmZOzpQ1g7aU4EE0eni2lwW4GJsugvU4sx51MTKEoSZ
+      1U+zlN+L8hMPcoaSfv6OOW616ct8eopdXi7mOkZ/87UFjUY6WtySYO90n6YjN9LLpD2iLlHyIfjZ
+      uwu7mFYebvH9HtO+6d6G99JexdmrNhcrXTkAAACBAPEJtenGdpWlonhTbJe9x3QKkQtsMwC41OmD
+      d7AEVI/8thRRIRFUMpAoThzAD7q37wnw7/I1j6tAawZQRxhmqHPbC69ro/fcuhg/MDOs7rFKXXtn
+      shhInQwUjP2pU6g8SN9RRntuC+7hTSHRB25jaW/7weJt1Jpt0xIgE4JGeivLAAAAgQDAcxZHdD/J
+      hiQ+/ggFsYdhvauCR9Z66oQfkkCRX5BOcoph4fMjQxgUxwfUYXVUCx5e9q19LKnWDB4FnnLNNTm9
+      Reyg1xSZvl98FcR8sh3l3ZdvA6feW1xd6vg8rpWtdnJag1iuKY+HpgU256Ub6yf8/M2J+zmicg6s
+      lWebI407RQ==
+      """
+      NODEUPGRADE_SERVER_PUBLIC_KEY = 'ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOzKxvjv/RFDOd2BE4HgxvqNsMljGiSRim7KUQNI/ifjvBe4Z325DBe78OJ6P9d2kf6omHUxnLi1oPu+YaEdDDk='
+
       NETWORK.update({
         'NAME': 'wlan slovenija',
         'HOME': 'https://wlan-si.net',
