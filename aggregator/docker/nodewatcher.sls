@@ -6,7 +6,7 @@ docker:
       environment:
         # We use a different virtual host for pushing monitoring data as we configure
         # TLS client authentication there.
-        - VIRTUAL_HOST: beta.wlan-si.net,push.nodes.wlan-si.net
+        - VIRTUAL_HOST: beta.wlan-si.net,nodes.wlan-si.net,push.nodes.wlan-si.net
           VIRTUAL_URL: /
         - nodewatcher
         - postgresql
@@ -29,11 +29,16 @@ docker:
             proxy_pass http://push.nodes.wlan-si.net-u;
           }
 
-          # Redirect all other requests to the beta site.
+          # Redirect all other requests to the main site.
           location ~ / {
-            return 301 https://beta.wlan-si.net$request_uri;
+            return 301 https://nodes.wlan-si.net$request_uri;
           }
         /srv/storage/ssl/beta.wlan-si.net_ssl.conf: |
+          # Redirect push requests to its proper virtual host.
+          location /push/http/ {
+            return 301 https://push.nodes.wlan-si.net$request_uri;
+          }
+        /srv/storage/ssl/nodes.wlan-si.net_ssl.conf: |
           # Redirect push requests to its proper virtual host.
           location /push/http/ {
             return 301 https://push.nodes.wlan-si.net$request_uri;
