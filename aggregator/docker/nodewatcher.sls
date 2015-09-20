@@ -194,7 +194,7 @@ docker:
       MEDIA_ROOT = '/media'
       STATIC_ROOT = '/static'
 
-      EMAIL_HOST = ''
+      EMAIL_HOST = 'mail.tnode.com'
 
       CELERY_RESULT_BACKEND = 'mongodb'
       CELERY_MONGODB_BACKEND_SETTINGS = {
