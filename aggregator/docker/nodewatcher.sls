@@ -38,6 +38,11 @@ docker:
           location /push/http/ {
             return 301 https://push.nodes.wlan-si.net$request_uri;
           }
+
+          # Redirect all requests to main site.
+          location ~ / {
+            return 301 https://nodes.wlan-si.net$request_uri;
+          }
         /srv/storage/ssl/nodes.wlan-si.net_ssl.conf: |
           # Redirect push requests to its proper virtual host.
           location /push/http/ {
