@@ -205,6 +205,7 @@ docker:
       STATIC_ROOT = '/static'
 
       EMAIL_HOST = 'mail.tnode.com'
+      EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
       CELERY_RESULT_BACKEND = 'mongodb'
       CELERY_MONGODB_BACKEND_SETTINGS = {
