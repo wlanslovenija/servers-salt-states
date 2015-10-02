@@ -190,6 +190,13 @@ docker:
 
       SECRET_KEY = os.environ.get('SECRET_KEY')
 
+      ADMINS = (
+        ('Jernej Kos', 'jernej@kos.mx'),
+        ('Mitar', 'mitar.nodewatcher@tnode.com'),
+      )
+
+      MANAGERS = ADMINS
+
       DATABASES = {
           'default': {
               'ENGINE': 'django.contrib.gis.db.backends.postgis',
