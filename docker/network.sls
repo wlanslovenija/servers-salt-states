@@ -22,5 +22,6 @@ netcfg-service:
   service.running:
     - name: netcfg
     - watch:
+      - service: docker
       - file: /etc/init/netcfg.conf
       - pip: netcfg
