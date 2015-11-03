@@ -49,11 +49,6 @@ docker:
             return 301 https://push.nodes.wlan-si.net$request_uri;
           }
       volumes:
-        /srv/storage/discovery/hosts:
-          bind: /etc/hosts
-          type: container
-          container: discovery
-          readonly: True
         /srv/storage/nodewatcher/media:
           bind: /media
           user: www-data
@@ -74,11 +69,6 @@ docker:
       config:
         nodewatcher: /code/nodewatcher/settings_production.py
       volumes:
-        /srv/storage/discovery/hosts:
-          bind: /etc/hosts
-          type: container
-          container: discovery
-          readonly: True
         /srv/storage/nodewatcher/media:
           bind: /media
           user: www-data
@@ -100,11 +90,6 @@ docker:
       config:
         nodewatcher: /code/nodewatcher/settings_production.py
       volumes:
-        /srv/storage/discovery/hosts:
-          bind: /etc/hosts
-          type: container
-          container: discovery
-          readonly: True
         /srv/storage/nodewatcher/media:
           bind: /media
           user: www-data
@@ -126,11 +111,6 @@ docker:
       config:
         nodewatcher: /code/nodewatcher/settings_production.py
       volumes:
-        /srv/storage/discovery/hosts:
-          bind: /etc/hosts
-          type: container
-          container: discovery
-          readonly: True
         /srv/storage/nodewatcher/media:
           bind: /media
           user: www-data

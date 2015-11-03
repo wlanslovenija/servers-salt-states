@@ -9,12 +9,6 @@ docker:
           MONGO_URL: mongodb://rocket-chat-db/rocketchat
           ROOT_URL: https://chat.wlan-si.net
           MAIL_URL: smtp://mail.tnode.com/
-      volumes:
-        /srv/storage/discovery/hosts:
-          bind: /etc/hosts
-          type: container
-          container: discovery
-          readonly: True
     rocket-chat-db:
       image: mongo
       volumes:

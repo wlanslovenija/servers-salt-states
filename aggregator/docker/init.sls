@@ -6,6 +6,5 @@ include:
   - aggregator.docker.nodewatcher
   - aggregator.docker.fileserver
   - aggregator.docker.builders
-  - aggregator.docker.discovery
   - aggregator.docker.nginx
   - aggregator.docker.rocketchat
