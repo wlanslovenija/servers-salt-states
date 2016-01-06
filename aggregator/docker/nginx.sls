@@ -1,7 +1,7 @@
 docker:
   containers:
     nginx-proxy:
-      image: wlanslovenija/nginx-proxy
+      image: tozd/nginx-proxy
       ports:
         80/tcp:
           ip: 212.101.139.12
