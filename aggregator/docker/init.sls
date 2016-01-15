@@ -3,6 +3,7 @@ include:
   - aggregator.docker.router
   - aggregator.docker.tokumx
   - aggregator.docker.postgresql
+  - aggregator.docker.redis
   - aggregator.docker.nodewatcher
   - aggregator.docker.fileserver
   - aggregator.docker.builders

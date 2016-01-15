@@ -194,18 +194,8 @@ docker:
       EMAIL_HOST = 'mail.tnode.com'
       EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-      CELERY_RESULT_BACKEND = 'mongodb'
-      CELERY_MONGODB_BACKEND_SETTINGS = {
-        'host': 'tokumx',
-        'port': '27017',
-        'database': 'nodewatcher_celery',
-        'taskmeta_collection': 'celery_taskmeta',
-        'options': {
-          'tz_aware': USE_TZ,
-        }
-      }
-
-      BROKER_URL = 'mongodb://tokumx:27017/nodewatcher_celery'
+      BROKER_URL = 'redis://redis:6379/0'
+      CELERY_RESULT_BACKEND = BROKER_URL
 
       DATASTREAM_BACKEND = 'datastream.backends.mongodb.Backend'
       DATASTREAM_BACKEND_SETTINGS = {
