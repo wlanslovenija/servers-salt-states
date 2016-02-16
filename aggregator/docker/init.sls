@@ -1,4 +1,5 @@
 include:
+  - aggregator.docker.discovery
   - aggregator.docker.tunneldigger
   - aggregator.docker.router
   - aggregator.docker.tokumx
