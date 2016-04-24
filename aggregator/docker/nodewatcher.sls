@@ -188,6 +188,8 @@ docker:
           }
       }
 
+      TIME_ZONE = 'Europe/Ljubljana'
+
       MEDIA_ROOT = '/media'
       STATIC_ROOT = '/static'
 
