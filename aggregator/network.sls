@@ -18,7 +18,7 @@ network:
           netmask: 64
           gateway: 2a00:1368:1000:30::1
 mailer:
-    relay: mail.tnode.com
-    root_alias:
-      - monitoring@unico.re
-      - mitar.aggregator@tnode.com
+  relay: mail.tnode.com
+  root_alias:
+    - monitoring@unico.re
+    - mitar.aggregator@tnode.com
