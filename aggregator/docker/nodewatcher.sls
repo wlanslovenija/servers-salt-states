@@ -165,8 +165,8 @@ docker:
       from .settings import *
 
       DEBUG = False
-      TEMPLATE_DEBUG = False
-      TEMPLATE_URL_RESOLVERS_DEBUG = False
+      TEMPLATE_DEBUG = DEBUG
+      TEMPLATE_URL_RESOLVERS_DEBUG = DEBUG
 
       SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -213,6 +213,14 @@ docker:
       MEASUREMENT_SOURCE_NODE = '5dcf6dae-9246-47ec-8ba5-f864d8f88778'
 
       USE_HTTPS = True
+      CSRF_COOKIE_SECURE = USE_HTTPS
+      SESSION_COOKIE_SECURE = USE_HTTPS
+      SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+      AUTHENTICATION_BACKENDS += (
+          'nodewatcher.extra.accounts.auth.AprBackend',
+          'nodewatcher.extra.accounts.auth.CryptBackend',
+      )
 
       HTTPS_PUBLIC_KEY = """
       -----BEGIN PUBLIC KEY-----
@@ -254,6 +262,7 @@ docker:
         'CONTACT': 'open@wlan-si.net',
         'CONTACT_PAGE': 'http://wlan-si.net/contact/',
         'DESCRIPTION': 'open wireless network of Slovenia',
+        'FAVICON_FILE': 'wlansi/images/favicon.ico',
       })
 
       EMAIL_SUBJECT_PREFIX = '[' + NETWORK['NAME'] + '] '
