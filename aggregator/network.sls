@@ -3,7 +3,8 @@ network:
     hostname: aggregator
     fqdn: aggregator.wlan-si.net
   dns:
-    - 8.8.8.8
+    ipv4:
+      - 8.8.8.8
   interfaces:
     p3p1:
       ipv4:
