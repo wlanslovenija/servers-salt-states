@@ -1,3 +1,5 @@
+docker.version: auto
+
 include:
   - aggregator.docker.discovery
   - aggregator.docker.tunneldigger
