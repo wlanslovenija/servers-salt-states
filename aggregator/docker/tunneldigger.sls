@@ -19,7 +19,6 @@ docker:
           bind: /var/log/tunneldigger
           user: nobody
           group: nogroup
-          logrotate: True
     tunneldigger-vpn1:
       image: wlanslovenija/tunneldigger-client
       host_kernel_modules:
@@ -39,4 +38,3 @@ docker:
           bind: /var/log/tunneldigger
           user: nobody
           group: nogroup
-          logrotate: True

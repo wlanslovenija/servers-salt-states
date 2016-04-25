@@ -3,7 +3,8 @@ network:
     hostname: aggregator
     fqdn: aggregator.wlan-si.net
   dns:
-    - 8.8.8.8
+    ipv4:
+      - 8.8.8.8
   interfaces:
     p3p1:
       ipv4:
@@ -17,7 +18,7 @@ network:
           netmask: 64
           gateway: 2a00:1368:1000:30::1
 mailer:
-    relay: mail.tnode.com
-    root_alias:
-      - monitoring@unico.re
-      - mitar.aggregator@tnode.com
+  relay: mail.tnode.com
+  root_alias:
+    - monitoring@unico.re
+    - mitar.aggregator@tnode.com

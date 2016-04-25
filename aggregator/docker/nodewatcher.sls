@@ -60,7 +60,6 @@ docker:
           bind: /var/log/uwsgi
           user: nobody
           group: nogroup
-          logrotate: True
     nodewatcher-generator:
       image: wlanslovenija/nodewatcher-generator
       environment:
@@ -78,7 +77,6 @@ docker:
           bind: /var/log/celery
           user: nobody
           group: nogroup
-          logrotate: True
     nodewatcher-monitor:
       image: wlanslovenija/nodewatcher-monitor
       network_mode:
@@ -99,7 +97,6 @@ docker:
           bind: /var/log/monitor
           user: nobody
           group: nogroup
-          logrotate: True
     nodewatcher-monitorq:
       image: wlanslovenija/nodewatcher-monitorq
       network_mode:
@@ -120,7 +117,6 @@ docker:
           bind: /var/log/celery
           user: nobody
           group: nogroup
-          logrotate: True
   environments:
     nodewatcher:
       DJANGO_SETTINGS_MODULE: nodewatcher.settings_production
@@ -165,8 +161,8 @@ docker:
       from .settings import *
 
       DEBUG = False
-      TEMPLATE_DEBUG = False
-      TEMPLATE_URL_RESOLVERS_DEBUG = False
+      TEMPLATE_DEBUG = DEBUG
+      TEMPLATE_URL_RESOLVERS_DEBUG = DEBUG
 
       SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -187,6 +183,8 @@ docker:
               'PORT': '5432',
           }
       }
+
+      TIME_ZONE = 'Europe/Ljubljana'
 
       MEDIA_ROOT = '/media'
       STATIC_ROOT = '/static'
@@ -213,6 +211,14 @@ docker:
       MEASUREMENT_SOURCE_NODE = '5dcf6dae-9246-47ec-8ba5-f864d8f88778'
 
       USE_HTTPS = True
+      CSRF_COOKIE_SECURE = USE_HTTPS
+      SESSION_COOKIE_SECURE = USE_HTTPS
+      SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+      AUTHENTICATION_BACKENDS += (
+          'nodewatcher.extra.accounts.auth.AprBackend',
+          'nodewatcher.extra.accounts.auth.CryptBackend',
+      )
 
       HTTPS_PUBLIC_KEY = """
       -----BEGIN PUBLIC KEY-----
@@ -254,6 +260,7 @@ docker:
         'CONTACT': 'open@wlan-si.net',
         'CONTACT_PAGE': 'http://wlan-si.net/contact/',
         'DESCRIPTION': 'open wireless network of Slovenia',
+        'FAVICON_FILE': 'wlansi/images/favicon.ico',
       })
 
       EMAIL_SUBJECT_PREFIX = '[' + NETWORK['NAME'] + '] '
