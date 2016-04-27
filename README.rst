@@ -31,15 +31,13 @@ containing commonly used Salt states.
 You should put SSH keys used by ``salt-ssh`` to login into servers into the ``config/pki``
 directory under this repository.
 
-You should also create a ``config/roster`` file with something like:
+You should also create a ``config/roster`` file with something like::
 
-```
-aggregator:
-  host: aggregator.wlan-si.net
-  port: 22
-  user: <username>
-  sudo: True
-```
+    aggregator:
+      host: aggregator.wlan-si.net
+      port: 22
+      user: <username>
+      sudo: True
 
 Secrets are encrypted with a GPG keypair to be protected. Future secrets can be encrypted using::
 
