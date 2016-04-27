@@ -1,4 +1,3 @@
-
 python-ipaddr:
   pkg.installed
 
