@@ -45,7 +45,7 @@ Secrets are encrypted with a GPG keypair to be protected. Future secrets can be 
 
 `See Salt GPG renderer documentation for more information`_.
 
-.. _tozd/_tozd/salt repository: https://github.com/tozd/salt
+.. _tozd/salt repository: https://github.com/tozd/salt
 .. _See Salt GPG renderer documentation for more information: https://docs.saltstack.com/en/latest/ref/renderers/all/salt.renderers.gpg.html
 
 Source Code, Issue Tracker and Mailing List
