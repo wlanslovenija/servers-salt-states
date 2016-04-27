@@ -13,7 +13,9 @@ An example Salt configuration, which may be used with ``salt-ssh`` follows::
     cachedir: /tmp/salt-cache
     jinja_trim_blocks: True
     jinja_lstrip_blocks: True
-    gpg_keydir: /home/wlanslovenija/.gnupg
+    gpg_keydir: /home/wlanslovenija/.gpgkeys
+    ssh_minion_opts:
+      gpg_keydir: /home/wlanslovenija/.gpgkeys
     file_roots:
       base:
         - /home/wlanslovenija/servers/states
