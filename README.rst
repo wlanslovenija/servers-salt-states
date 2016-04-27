@@ -1,7 +1,7 @@
-wlan slovenija Salt states
-==========================
+wlan slovenija servers installation
+===================================
 
-This repository contains a set of Salt_ states that, together with pillar data
+This repository contains a set of Salt_ states and pillar data that
 enable configuration of various *wlan slovenija* servers.
 
 Some required states are defined in `tozd/salt`_ which needs to be overlaid
