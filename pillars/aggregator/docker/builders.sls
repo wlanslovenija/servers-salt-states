@@ -44,10 +44,10 @@ docker:
         VIRTUAL_HOST: packages.wlan-si.net
         VIRTUAL_URL: /firmware/git.7a3dd4e/openwrt/chaos_calmer/ramips_rt305x/
     # Designated Driver (experimental)
-    builder-openwrt-vb2a0793-dd-ramips_mt7621:
+    builder-openwrt-ve546158-dd-ramips_mt7621:
       image: wlanslovenija/openwrt-builder
-      tag: vb2a0793_dd_ramips_mt7621
+      tag: ve546158_dd_ramips_mt7621
       environment:
         BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
         VIRTUAL_HOST: packages.wlan-si.net
-        VIRTUAL_URL: /firmware/git.b2a0793/openwrt/designated_driver/ramips_mt7621/
+        VIRTUAL_URL: /firmware/git.e546158/openwrt/designated_driver/ramips_mt7621/
