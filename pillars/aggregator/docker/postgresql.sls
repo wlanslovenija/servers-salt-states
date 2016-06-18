@@ -3,10 +3,10 @@ docker:
   containers:
     postgresql:
       image: tozd/postgresql
-      tag: "9.3"
+      tag: "9.5"
       volumes:
         /srv/storage/postgresql:
-          bind: /var/lib/postgresql/9.3/main
+          bind: /var/lib/postgresql/9.5/main
           user: 102
           group: 106
         /srv/log/postgresql:
