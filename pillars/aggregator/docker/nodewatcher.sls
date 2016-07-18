@@ -8,6 +8,7 @@ docker:
         # TLS client authentication there.
         - VIRTUAL_HOST: beta.wlan-si.net,nodes.wlan-si.net,push.nodes.wlan-si.net
           VIRTUAL_URL: /
+          VIRTUAL_LETSENCRYPT: "true"
         - nodewatcher
         - postgresql
       config:
@@ -222,13 +223,18 @@ docker:
 
       HTTPS_PUBLIC_KEY = """
       -----BEGIN PUBLIC KEY-----
-      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyGTutAIvDLMhQcfjLrzz
-      kho+uhklozGOhF3OvnYoGxlzXt7BZ/zd73dn8z3FcNHfA+VyJsz3+vaMOMmz0aim
-      btfkZrKgYRcF6JhkILnEDDz8072rVX2kR61BTh8LoXPJcI3Lhcx1UiiGah/TouDw
-      RLn0bhZw/FdBsEAbw8kuCJ+OvXkT6N8zM5FIHsMMp+KAAD6TJcFFUWTU0C+wUtZL
-      bj9TPZReK+FQbX6rbtG4Q+Dmrft92jnHkj1WwwVhKbrG0uEuwNOBoCv79sR7YkoE
-      5xYwzatP9S+YIJ6weWqgPlpqafXoISS7dKMHql1jWWIMVZRu7DZcEyrJ5VEZLAsg
-      YQIDAQAB
+      MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2gCARJCGa4PmrAyRxKp5
+      DvjVYRAFVZI25ACOHmTUSz6pp10hH8V6xp3ubbTnROG25K0xMjvHVjqH+ZrKtetr
+      iU9ShvRhY0wFM3BjdTzD0qAKvHFBlRrqT+Lx+7f739ZfGCVQ6FeaWuDRMLDv4uhm
+      4QIIOCBX9Kaj1DR2ayABsw05mFR5KrAu6HGLH22dDebhcMOueO4nR0PeOlaKBjuH
+      +F0h/FKz8gqofd3VR+J/C+h9+SzanXGJXGr6vhxIfshkSnuv2BneYNAg2CY0Ft0b
+      dO55GDbaQZHbKTnA0Cg+V9H4x/ArdmGfeEm6UE8TCoQHr6zAGPJ5e7XIzE4fvAS4
+      qgctt7vH1QJ3YUI72HAQjyARQ+9VPo6YfdtMXac5s3tMfvKz4Ks9Bf+kVbCF40/t
+      ZQvUCFIjc8ntqPZZ4Ml5I5RQ7JPnEcNTRcF9Dn2qGBTqRyi+J3HCP993djzP5AI3
+      ZbNH4aN8zXdstxXOu5DQraQ+V8cCSEEErgfjcqK2MTAejBqBefWy1mLad04Ai4/l
+      TfWWO8OUUgTALqNHA9B6e2za5ORkteAc1/wXznM+KdGoWGF69Q2e6BisA7scLY9W
+      uRQ+n/hMQ+vvFqM0xpv6PTl7X8uqXamTUjviSpS2ebcMwTJ2ZTMa7H5xERu4iaPT
+      lCPkcr8951RzeYJljgbqdmECAwEAAQ==
       -----END PUBLIC KEY-----
       """
 
