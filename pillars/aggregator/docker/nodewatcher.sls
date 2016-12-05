@@ -342,7 +342,7 @@ docker:
               'processors': (
                   'nodewatcher.modules.monitor.unknown_nodes.processors.DiscoverUnknownNodes',
                   'nodewatcher.modules.monitor.sources.http.processors.HTTPGetPushedNode',
-                  'nodewatcher.modules.identity.public_key.processors.VerifyNodePublicKey',
+                  'nodewatcher.modules.identity.base.processors.VerifyNodeIdentity',
                   'nodewatcher.modules.monitor.datastream.processors.TrackRegistryModels',
                   TELEMETRY_PROCESSOR_PIPELINE,
               ),
