@@ -2,7 +2,7 @@ wlan slovenija servers installation
 ===================================
 
 This repository contains Salt_ files to deploy various *wlan slovenija* servers.
-Expected to be used with Ubuntu Server 16.04 or 14.04, but it might work with other
+Expected to be used with Ubuntu Server 14.04, but it might work with other
 distributions as well.
 
 .. _Salt: http://docs.saltstack.com/en/latest/
