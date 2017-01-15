@@ -8,6 +8,7 @@ docker:
         # TLS client authentication there.
         - VIRTUAL_HOST: beta.wlan-si.net,nodes.wlan-si.net,push.nodes.wlan-si.net
           VIRTUAL_URL: /
+          VIRTUAL_LETSENCRYPT: "true"
         - nodewatcher
         - postgresql
       config:
@@ -195,12 +196,20 @@ docker:
       BROKER_URL = 'redis://redis:6379/0'
       CELERY_RESULT_BACKEND = BROKER_URL
 
-      DATASTREAM_BACKEND = 'datastream.backends.mongodb.Backend'
+      DATASTREAM_BACKEND = 'datastream.backends.influxdb.Backend'
       DATASTREAM_BACKEND_SETTINGS = {
-        'database_name': 'nodewatcher_ds',
-        'host': 'tokumx',
-        'port': 27017,
-        'tz_aware': USE_TZ,
+          'connection_influxdb': {
+              'host': 'influxdb',
+              'port': 8086,
+              'database': 'nodewatcher'
+          },
+          'connection_metadata': {
+              'host': DATABASES['default']['HOST'],
+              'port': DATABASES['default']['PORT'],
+              'database': DATABASES['default']['NAME'],
+              'user': DATABASES['default']['USER'],
+              'password': DATABASES['default']['PASSWORD'],
+          },
       }
 
       OLSRD_MONITOR_HOST = '127.0.0.1'
@@ -222,13 +231,18 @@ docker:
 
       HTTPS_PUBLIC_KEY = """
       -----BEGIN PUBLIC KEY-----
-      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyGTutAIvDLMhQcfjLrzz
-      kho+uhklozGOhF3OvnYoGxlzXt7BZ/zd73dn8z3FcNHfA+VyJsz3+vaMOMmz0aim
-      btfkZrKgYRcF6JhkILnEDDz8072rVX2kR61BTh8LoXPJcI3Lhcx1UiiGah/TouDw
-      RLn0bhZw/FdBsEAbw8kuCJ+OvXkT6N8zM5FIHsMMp+KAAD6TJcFFUWTU0C+wUtZL
-      bj9TPZReK+FQbX6rbtG4Q+Dmrft92jnHkj1WwwVhKbrG0uEuwNOBoCv79sR7YkoE
-      5xYwzatP9S+YIJ6weWqgPlpqafXoISS7dKMHql1jWWIMVZRu7DZcEyrJ5VEZLAsg
-      YQIDAQAB
+      MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2gCARJCGa4PmrAyRxKp5
+      DvjVYRAFVZI25ACOHmTUSz6pp10hH8V6xp3ubbTnROG25K0xMjvHVjqH+ZrKtetr
+      iU9ShvRhY0wFM3BjdTzD0qAKvHFBlRrqT+Lx+7f739ZfGCVQ6FeaWuDRMLDv4uhm
+      4QIIOCBX9Kaj1DR2ayABsw05mFR5KrAu6HGLH22dDebhcMOueO4nR0PeOlaKBjuH
+      +F0h/FKz8gqofd3VR+J/C+h9+SzanXGJXGr6vhxIfshkSnuv2BneYNAg2CY0Ft0b
+      dO55GDbaQZHbKTnA0Cg+V9H4x/ArdmGfeEm6UE8TCoQHr6zAGPJ5e7XIzE4fvAS4
+      qgctt7vH1QJ3YUI72HAQjyARQ+9VPo6YfdtMXac5s3tMfvKz4Ks9Bf+kVbCF40/t
+      ZQvUCFIjc8ntqPZZ4Ml5I5RQ7JPnEcNTRcF9Dn2qGBTqRyi+J3HCP993djzP5AI3
+      ZbNH4aN8zXdstxXOu5DQraQ+V8cCSEEErgfjcqK2MTAejBqBefWy1mLad04Ai4/l
+      TfWWO8OUUgTALqNHA9B6e2za5ORkteAc1/wXznM+KdGoWGF69Q2e6BisA7scLY9W
+      uRQ+n/hMQ+vvFqM0xpv6PTl7X8uqXamTUjviSpS2ebcMwTJ2ZTMa7H5xERu4iaPT
+      lCPkcr8951RzeYJljgbqdmECAwEAAQ==
       -----END PUBLIC KEY-----
       """
 
@@ -268,3 +282,80 @@ docker:
       SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
       ALLOWED_HOSTS = os.environ.get('VIRTUAL_HOST', '127.0.0.1').split(',')
+
+      TELEMETRY_PROCESSOR_PIPELINE = (
+          # Validators should start here in order to obtain previous state.
+          'nodewatcher.modules.monitor.validation.reboot.processors.RebootValidator',
+          'nodewatcher.modules.monitor.validation.version.processors.VersionValidator',
+          'nodewatcher.modules.monitor.validation.interfaces.processors.InterfaceValidator',
+          # Telemetry processors should be below this point.
+          'nodewatcher.modules.monitor.sources.http.processors.HTTPTelemetry',
+          'nodewatcher.modules.monitor.http.general.processors.GeneralInfo',
+          'nodewatcher.core.monitor.processors.GeneralInfo',
+          'nodewatcher.modules.monitor.http.resources.processors.SystemStatus',
+          'nodewatcher.modules.monitor.http.interfaces.processors.DatastreamInterfaces',
+          'nodewatcher.modules.monitor.http.clients.processors.ClientInfo',
+          'nodewatcher.modules.routing.olsr.processors.NodeTopology',
+          'nodewatcher.modules.routing.babel.processors.BabelTopology',
+          'nodewatcher.modules.sensors.generic.processors.GenericSensors',
+          'nodewatcher.extra.irnas.koruzav2.processors.Koruza',
+          'nodewatcher.extra.irnas.sfp.processors.SFP',
+          'nodewatcher.modules.vpn.tunneldigger.processors.DatastreamTunneldigger',
+          'nodewatcher.modules.administration.status.processors.NodeStatus',
+          'nodewatcher.modules.monitor.datastream.processors.NodeDatastream',
+      )
+
+      MONITOR_RUNS = {
+          'latency': {
+              'workers': 5,
+              'interval': 600,
+              'processors': (
+                  'nodewatcher.modules.routing.olsr.processors.GlobalTopology',
+                  'nodewatcher.modules.routing.babel.processors.IncludeRoutableNodes',
+                  'nodewatcher.modules.monitor.measurements.rtt.processors.RttMeasurement',
+                  'nodewatcher.modules.monitor.datastream.processors.TrackRegistryModels',
+                  'nodewatcher.modules.monitor.measurements.rtt.processors.StoreNode',
+                  'nodewatcher.modules.administration.status.processors.NodeStatus',
+                  'nodewatcher.modules.monitor.datastream.processors.NodeDatastream',
+              ),
+          },
+
+          'telemetry': {
+              'workers': 15,
+              'interval': 300,
+              'max_tasks_per_child': 50,
+              'processors': (
+                  'nodewatcher.core.monitor.processors.GetAllNodes',
+                  'nodewatcher.modules.routing.olsr.processors.GlobalTopology',
+                  'nodewatcher.modules.routing.babel.processors.IncludeRoutableNodes',
+                  'nodewatcher.modules.monitor.datastream.processors.TrackRegistryModels',
+                  'nodewatcher.modules.routing.olsr.processors.NodeTopology',
+                  TELEMETRY_PROCESSOR_PIPELINE,
+                  'nodewatcher.modules.monitor.datastream.processors.MaintenanceBackprocess',
+                  'nodewatcher.modules.administration.status.processors.PushNodeStatus',
+              ),
+          },
+
+          'telemetry-push': {
+              # This run does not define any scheduling or worker information, so it will only be
+              # executed on demand.
+              'processors': (
+                  'nodewatcher.modules.monitor.unknown_nodes.processors.DiscoverUnknownNodes',
+                  'nodewatcher.modules.monitor.sources.http.processors.HTTPGetPushedNode',
+                  'nodewatcher.modules.identity.base.processors.VerifyNodeIdentity',
+                  'nodewatcher.modules.monitor.datastream.processors.TrackRegistryModels',
+                  TELEMETRY_PROCESSOR_PIPELINE,
+              ),
+          },
+
+          'topology': {
+              'workers': 5,
+              'interval': 60,
+              'processors': (
+                  'nodewatcher.modules.routing.olsr.processors.GlobalTopology',
+                  'nodewatcher.modules.routing.olsr.processors.NodeTopology',
+                  'nodewatcher.modules.monitor.topology.processors.Topology',
+                  'nodewatcher.modules.monitor.datastream.processors.NetworkDatastream',
+              ),
+          },
+      }

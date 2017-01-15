@@ -2,6 +2,10 @@ docker:
   containers:
     nginx-proxy:
       image: tozd/nginx-proxy
+      environment:
+        - MAILTO: monitoring@unico.re,mitar.aggregator@tnode.com
+          REMOTES: mail.tnode.com
+          LETSENCRYPT_EMAIL: aggregator@unico.re
       ports:
         80/tcp:
           ip: 212.101.139.12
