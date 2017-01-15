@@ -1,11 +1,9 @@
 wlan slovenija servers installation
 ===================================
 
-This repository contains Salt_ states and pillar data that
-enable configuration of various *wlan slovenija* servers.
+This repository contains Salt_ files to deploy various *wlan slovenija* servers.
 
 .. _Salt: http://docs.saltstack.com/en/latest/
-.. _tozd/salt: https://github.com/tozd/salt
 
 An example Salt configuration, which may be used with ``salt-ssh`` follows::
 
@@ -13,9 +11,11 @@ An example Salt configuration, which may be used with ``salt-ssh`` follows::
     cachedir: /tmp/salt-cache
     jinja_trim_blocks: True
     jinja_lstrip_blocks: True
-    gpg_keydir: /home/wlanslovenija/.gpgkeys
+    ssh_use_home_key: True
     ssh_minion_opts:
-      gpg_keydir: /home/wlanslovenija/.gpgkeys
+      gpg_keydir: /home/wlanslovenija/.gnupg
+    log_file: /home/wlanslovenija/servers/log/master
+    ssh_log_file: /home/wlanslovenija/servers/log/ssh
     file_roots:
       base:
         - /home/wlanslovenija/servers/states
@@ -29,9 +29,6 @@ You can put it into the ``config/master`` file under this repository.
 In this example, the ``servers`` directory contains a checkout of this repository, while
 the ``tozd`` directory is a checkout of the `tozd/salt repository`_,
 containing commonly used Salt states.
-
-You should put SSH keys used by ``salt-ssh`` to login into servers into the ``config/pki``
-directory under this repository.
 
 You should also create a ``config/roster`` file with something like::
 
