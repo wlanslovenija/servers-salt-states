@@ -26,4 +26,3 @@ docker:
           bind: /var/log/nginx
           user: nobody
           group: nogroup
-          logrotate: True
