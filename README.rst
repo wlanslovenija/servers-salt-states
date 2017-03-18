@@ -2,37 +2,12 @@ wlan slovenija servers installation
 ===================================
 
 This repository contains Salt_ files to deploy various *wlan slovenija* servers.
-Expected to be used with Ubuntu Server 14.04, but it might work with other
-distributions as well.
+Expected to be used with Ubuntu Server 14.04 and 16.04, but it might work with other distributions
+as well.
 
 .. _Salt: http://docs.saltstack.com/en/latest/
 
-An example Salt configuration, which may be used with ``salt-ssh`` follows::
-
-    pki_dir: /home/wlanslovenija/servers/config/pki
-    cachedir: /tmp/salt-cache
-    jinja_trim_blocks: True
-    jinja_lstrip_blocks: True
-    ssh_use_home_key: True
-    ssh_minion_opts:
-      gpg_keydir: /home/wlanslovenija/.gnupg
-    log_file: /home/wlanslovenija/servers/log/master
-    ssh_log_file: /home/wlanslovenija/servers/log/ssh
-    file_roots:
-      base:
-        - /home/wlanslovenija/servers/states
-        - /home/wlanslovenija/tozd
-    pillar_roots:
-      base:
-        - /home/wlanslovenija/servers/pillars
-
-You can put it into the ``config/master`` file under this repository.
-
-In this example, the ``servers`` directory contains a checkout of this repository, while
-the ``tozd`` directory is a checkout of the `tozd/salt repository`_,
-containing commonly used Salt states.
-
-You should also create a ``config/roster`` file with something like::
+You should create a ``config/roster`` file with something like::
 
     aggregator:
       host: aggregator.wlan-si.net
@@ -40,13 +15,23 @@ You should also create a ``config/roster`` file with something like::
       user: <username>
       sudo: True
 
+Your user on the target server should have sudo permissions without needing to provide a password.
+You can configure that in ``/etc/sudoers`` on the target server with such line (you can replace existing
+one without ``NOPASSWD``)::
+
+    # Allow members of group sudo to execute any command
+    %sudo   ALL=(ALL) NOPASSWD: ALL
+
+Then you can sync the state of a server by doing::
+
+    $ salt-ssh '<servername>' state.highstate
+
 Secrets are encrypted with a GPG keypair to be protected. Future secrets can be encrypted using::
 
     echo -n "supersecret" | gpg --armor --encrypt -r <keyid>
 
 `See Salt GPG renderer documentation for more information`_.
 
-.. _tozd/salt repository: https://github.com/tozd/salt
 .. _See Salt GPG renderer documentation for more information: https://docs.saltstack.com/en/latest/ref/renderers/all/salt.renderers.gpg.html
 
 Source Code, Issue Tracker and Mailing List
