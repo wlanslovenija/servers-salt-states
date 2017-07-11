@@ -12,6 +12,9 @@ docker:
         - id: td-vpn1
           ips:
             - address: 10.254.0.6/16
+        - id: td-vpn2
+          ips:
+            - address: 10.254.0.9/16
     # OLSR routing protocol.
     olsrd:
       image: wlanslovenija/router-olsrd
@@ -37,7 +40,8 @@ docker:
         # Only allow a small subset of capabilities.
         - NET_ADMIN
       environment:
-        ROUTER_INTERFACES: td-vpn0 td-vpn1
+        ROUTER_INTERFACES: td-vpn0 td-vpn1 td-vpn2
+        BABELD_DISABLE_ANNOUNCE: 1
       network_mode:
         type: container
         container: mesh-network
