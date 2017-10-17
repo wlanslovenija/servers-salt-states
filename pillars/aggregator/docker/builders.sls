@@ -1,41 +1,41 @@
 docker:
   containers:
     # LEDE.
-    builder-lede-v48c6eca-v17-01-2-ar71xx:
+    builder-lede-v3c5454f-v17-01-3-ar71xx:
       image: wlanslovenija/lede-builder
-      tag: v48c6eca_17_01_2_ar71xx
+      tag: v3c5454f_17_01_3_ar71xx
       environment:
         BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
         VIRTUAL_HOST: packages.wlan-si.net
-        VIRTUAL_URL: /firmware/git.48c6eca/lede/v17.01.2/ar71xx/
-    builder-lede-v48c6eca-v17-01-2-x86_64:
+        VIRTUAL_URL: /firmware/git.3c5454f/lede/v17.01.3/ar71xx/
+    builder-lede-v3c5454f-v17-01-3-x86_64:
       image: wlanslovenija/lede-builder
-      tag: v48c6eca_17_01_2_x86_64
+      tag: v3c5454f_17_01_3_x86_64
       environment:
         BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
         VIRTUAL_HOST: packages.wlan-si.net
-        VIRTUAL_URL: /firmware/git.48c6eca/lede/v17.01.2/x86_64/
-    builder-lede-v48c6eca-v17-01-2-ramips_mt7621:
+        VIRTUAL_URL: /firmware/git.3c5454f/lede/v17.01.3/x86_64/
+    builder-lede-v3c5454f-v17-01-3-ramips_mt7621:
       image: wlanslovenija/lede-builder
-      tag: v48c6eca_17_01_2_ramips_mt7621
+      tag: v3c5454f_17_01_3_ramips_mt7621
       environment:
         BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
         VIRTUAL_HOST: packages.wlan-si.net
-        VIRTUAL_URL: /firmware/git.48c6eca/lede/v17.01.2/ramips_mt7621/
-    builder-lede-v48c6eca-v17-01-2-ramips_mt7620:
+        VIRTUAL_URL: /firmware/git.3c5454f/lede/v17.01.3/ramips_mt7621/
+    builder-lede-v3c5454f-v17-01-3-ramips_mt7620:
       image: wlanslovenija/lede-builder
-      tag: v48c6eca_17_01_2_ramips_mt7620
+      tag: v3c5454f_17_01_3_ramips_mt7620
       environment:
         BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
         VIRTUAL_HOST: packages.wlan-si.net
-        VIRTUAL_URL: /firmware/git.48c6eca/lede/v17.01.2/ramips_mt7620/
-    builder-lede-v48c6eca-v17-01-2-ramips_mt7628:
+        VIRTUAL_URL: /firmware/git.3c5454f/lede/v17.01.3/ramips_mt7620/
+    builder-lede-v3c5454f-v17-01-3-ramips_mt7628:
       image: wlanslovenija/lede-builder
-      tag: v48c6eca_17_01_2_ramips_mt7628
+      tag: v3c5454f_17_01_3_ramips_mt7628
       environment:
         BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
         VIRTUAL_HOST: packages.wlan-si.net
-        VIRTUAL_URL: /firmware/git.48c6eca/lede/v17.01.2/ramips_mt7628/
+        VIRTUAL_URL: /firmware/git.3c5454f/lede/v17.01.3/ramips_mt7628/
     # Chaos Calmer (stable)
     builder-openwrt-v15acdee-cc-ar71xx:
       image: wlanslovenija/openwrt-builder
