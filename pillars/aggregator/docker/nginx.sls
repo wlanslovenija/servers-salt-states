@@ -2,6 +2,8 @@ docker:
   containers:
     nginx-proxy:
       image: tozd/nginx-proxy
+      network_mode:
+        name: nodewatcher
       environment:
         - MAILTO: monitoring@unico.re,mitar.aggregator@tnode.com
           REMOTES: mail.tnode.com

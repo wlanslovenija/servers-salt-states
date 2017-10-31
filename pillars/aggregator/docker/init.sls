@@ -1,7 +1,6 @@
 docker.version: auto
 
 include:
-  - aggregator.docker.discovery
   - aggregator.docker.tunneldigger
   - aggregator.docker.router
   - aggregator.docker.influxdb

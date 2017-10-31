@@ -4,6 +4,8 @@ docker:
     postgresql:
       image: tozd/postgresql
       tag: "9.5"
+      network_mode:
+        name: nodewatcher
       volumes:
         /srv/storage/postgresql:
           bind: /var/lib/postgresql/9.5/main

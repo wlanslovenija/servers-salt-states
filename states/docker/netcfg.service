@@ -1,0 +1,10 @@
+[Unit]
+Description=netcfg
+After=docker.service
+
+[Service]
+ExecStart=/usr/local/bin/netcfg daemon --config /srv/netcfg/netcfg.json
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

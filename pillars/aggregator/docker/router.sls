@@ -5,6 +5,8 @@ docker:
     # will not get lost even if the individual containers are taken down.
     mesh-network:
       image: kubernetes/pause
+      network_mode:
+        name: nodewatcher
       networks:
         - id: td-vpn0
           ips:

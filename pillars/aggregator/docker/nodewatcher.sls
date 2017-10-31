@@ -3,6 +3,8 @@ docker:
   containers:
     nodewatcher-frontend:
       image: wlanslovenija/nodewatcher-frontend
+      network_mode:
+        name: nodewatcher
       environment:
         # We use a different virtual host for pushing monitoring data as we configure
         # TLS client authentication there.
@@ -63,6 +65,8 @@ docker:
           group: nogroup
     nodewatcher-generator:
       image: wlanslovenija/nodewatcher-generator
+      network_mode:
+        name: nodewatcher
       environment:
         - nodewatcher
         - postgresql

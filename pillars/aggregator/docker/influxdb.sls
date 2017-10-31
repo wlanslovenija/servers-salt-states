@@ -2,6 +2,8 @@ docker:
   containers:
     influxdb:
       image: tozd/influxdb
+      network_mode:
+        name: nodewatcher
       volumes:
         /srv/storage/influxdb:
           bind: /data
