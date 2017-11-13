@@ -24,7 +24,7 @@ docker:
         /srv/storage/external-dns/supermasters.conf:
           bind: /etc/powerdns/supermasters.conf
           type: file
-        /srv/log/dns:
+        /srv/log/external-dns:
           bind: /var/log/powerdns
       files:
         /srv/storage/external-dns/pdns.d/pdns.conf: |
@@ -59,3 +59,4 @@ docker:
         /srv/storage/external-dns/supermasters.conf: |
           # Managed by Salt.
           46.54.226.40 ns1
+          46.54.226.44 ns1
