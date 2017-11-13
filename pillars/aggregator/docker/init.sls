@@ -11,3 +11,4 @@ include:
   - aggregator.docker.builders
   - aggregator.docker.nginx
   - aggregator.docker.rocketchat
+  - aggregator.docker.external-dns
