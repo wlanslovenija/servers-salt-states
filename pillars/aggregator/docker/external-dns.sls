@@ -1,4 +1,4 @@
-# One has to create /srv/storage/external-dns/bind/superslave.conf manually after deploying with 102:105 owner.
+# One has to manually create /srv/storage/external-dns/bind/superslave.conf with 102:105 owner after deploying for the first time.
 
 docker:
   containers:
