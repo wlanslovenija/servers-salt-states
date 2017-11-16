@@ -1,4 +1,4 @@
-# One has to create /srv/storage/external-dns/bind/superslave.conf manually after deploying.
+# One has to create /srv/storage/external-dns/bind/superslave.conf manually after deploying with 102:105 owner.
 
 docker:
   containers:
@@ -18,6 +18,8 @@ docker:
           bind: /etc/powerdns/pdns.d
         /srv/storage/external-dns/bind:
           bind: /etc/powerdns/bind
+          user: 102
+          group: 105
         /srv/storage/external-dns/bindbackend.conf:
           bind: /etc/powerdns/bindbackend.conf
           type: file
