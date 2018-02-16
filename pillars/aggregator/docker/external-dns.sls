@@ -60,5 +60,4 @@ docker:
           include "superslave.conf";
         /srv/storage/external-dns/supermasters.conf: |
           # Managed by Salt.
-          46.54.226.40 ns1
           46.54.226.44 ns1
