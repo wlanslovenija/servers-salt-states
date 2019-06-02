@@ -1,5 +1,60 @@
 docker:
   containers:
+    # LEDE (master).
+    builder-lede-v86bdb96-master-ar71xx:
+      image: wlanslovenija/lede-builder
+      tag: v86bdb96_master_ar71xx
+      network_mode:
+        name: nodewatcher
+      environment:
+        BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
+        VIRTUAL_HOST: packages.wlan-si.net
+        VIRTUAL_URL: /firmware/git.86bdb96/lede/master/ar71xx/
+    builder-lede-v86bdb96-master-ar71xx_mikrotik:
+      image: wlanslovenija/lede-builder
+      tag: v86bdb96_master_ar71xx_mikrotik
+      network_mode:
+        name: nodewatcher
+      environment:
+        BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
+        VIRTUAL_HOST: packages.wlan-si.net
+        VIRTUAL_URL: /firmware/git.86bdb96/lede/master/ar71xx_mikrotik/
+    builder-lede-v86bdb96-master-x86_64:
+      image: wlanslovenija/lede-builder
+      tag: v86bdb96_master_x86_64
+      network_mode:
+        name: nodewatcher
+      environment:
+        BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
+        VIRTUAL_HOST: packages.wlan-si.net
+        VIRTUAL_URL: /firmware/git.86bdb96/lede/master/x86_64/
+    builder-lede-v86bdb96-master-ramips_mt7621:
+      image: wlanslovenija/lede-builder
+      tag: v86bdb96_master_ramips_mt7621
+      network_mode:
+        name: nodewatcher
+      environment:
+        BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
+        VIRTUAL_HOST: packages.wlan-si.net
+        VIRTUAL_URL: /firmware/git.86bdb96/lede/master/ramips_mt7621/
+    builder-lede-v86bdb96-master-ramips_mt7620:
+      image: wlanslovenija/lede-builder
+      tag: v86bdb96_master_ramips_mt7620
+      network_mode:
+        name: nodewatcher
+      environment:
+        BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
+        VIRTUAL_HOST: packages.wlan-si.net
+        VIRTUAL_URL: /firmware/git.86bdb96/lede/master/ramips_mt7620/
+    builder-lede-v86bdb96-master-ramips_mt76x8:
+      image: wlanslovenija/lede-builder
+      tag: v86bdb96_master_ramips_mt76x8
+      network_mode:
+        name: nodewatcher
+      environment:
+        BUILDER_PUBLIC_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdqJhdBCJB3oMkhw0WiJ+JPrZjNQ2d8QVFx0BuuzRrDrQinuwcwNIzTcDBwzRhH53Z4Dx4nEMyNorZJwSWtMBUYlEHprZfc6x6/uOyb0c7bMg4VpQhrhJsSx2VLyzee/XtCNpo51qTkq/FoNXYx3xjgWVjwJ3iWZ46526Voru7hYlzDW8XOwqXAEpdnfnXIa37xj/Aopn1x7q7CaGXy7ASvbM46dXDHFSfpLn+NYTHQCbM07oHcTXoTfcMaCAX6Ot9tJ0G2tlY7IiXuQIQlnNRVezYn9gzzQpP5UZ9km3njMb+AlFjtyAJaKUngnzGteUk73K0Clwwu7qmSHZQbI5n builder@wlan-si.net
+        VIRTUAL_HOST: packages.wlan-si.net
+        VIRTUAL_URL: /firmware/git.86bdb96/lede/master/ramips_mt76x8/
     # LEDE.
     builder-lede-v3c5454f-v17-01-3-ar71xx:
       image: wlanslovenija/lede-builder
