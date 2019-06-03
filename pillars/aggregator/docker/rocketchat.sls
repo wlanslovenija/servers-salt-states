@@ -14,6 +14,7 @@ docker:
           MAIL_URL: smtp://mail.tnode.com/
     rocket-chat-db:
       image: mongo
+      tag: 3.6
       network_mode:
         name: nodewatcher
       volumes:
