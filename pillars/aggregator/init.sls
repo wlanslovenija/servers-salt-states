@@ -1,3 +1,3 @@
 include:
-  - aggregator.network
+  - aggregator.config
   - aggregator.docker

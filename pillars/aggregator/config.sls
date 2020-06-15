@@ -22,3 +22,5 @@ mailer:
   root_alias:
     - monitoring@unico.re
     - mitar.aggregator@tnode.com
+docker:
+  release: docker-engine

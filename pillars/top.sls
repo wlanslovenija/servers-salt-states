@@ -1,4 +1,3 @@
 base:
-  'aggregator':
+  aggregator:
     - aggregator
-
